@@ -58,8 +58,6 @@ class GenreDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
-
 class ActorList(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
