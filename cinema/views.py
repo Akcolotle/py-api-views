@@ -1,11 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import mixins
-
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import status, mixins
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from django.shortcuts import get_object_or_404
 
@@ -46,9 +43,7 @@ class GenreDetail(APIView):
 
     def patch(self, request, pk):
         genre = get_object_or_404(Genre, pk=pk)
-        serializer = GenreSerializer(
-            genre, data=request.data, partial=True
-        )
+        serializer = GenreSerializer(genre, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -81,80 +76,6 @@ class ActorDetail(
 ):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
-
-class MovieList(
-    mixins.ListModelMixin,
-    mixins.CreateModelMixin,
-    GenericAPIView,
-):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class MovieDetail(
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    GenericAPIView,
-):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
-
-class CinemaHallList(
-    mixins.ListModelMixin,
-    mixins.CreateModelMixin,
-    GenericAPIView,
-):
-    queryset = CinemaHall.objects.all()
-    serializer_class = CinemaHallSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class CinemaHallDetail(
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-    GenericAPIView,
-):
-    queryset = CinemaHall.objects.all()
-    serializer_class = CinemaHallSerializer
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
